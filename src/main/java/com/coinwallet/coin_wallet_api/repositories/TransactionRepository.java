@@ -1,0 +1,17 @@
+package com.coinwallet.coin_wallet_api.repositories;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.coinwallet.coin_wallet_api.models.Transaction;
+
+@Repository
+public interface TransactionRepository extends JpaRepository<Transaction, Long>{
+
+    List<Transaction> findBySourceAccountId(Long accountId);
+
+    List<Transaction> findByDestinationAccountId(Long accountId);
+
+}
