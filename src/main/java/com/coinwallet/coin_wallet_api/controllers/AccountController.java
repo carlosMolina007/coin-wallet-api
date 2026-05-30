@@ -15,7 +15,7 @@ public class AccountController {
 
     private final AccountService accountService;
 
-    // POST - Crear cuenta asociada a un usuario
+    // POST - Create account assocciated with a user (http://localhost:8080/api/accounts/user/{userId})
     @PostMapping("/user/{userId}")
     public ResponseEntity<Account> createAccount(@PathVariable Long userId, @Valid @RequestBody Account account) {
         Account createdAccount = accountService.createAccount(userId, account);

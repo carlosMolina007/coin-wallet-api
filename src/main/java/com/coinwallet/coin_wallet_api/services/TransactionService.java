@@ -1,9 +1,12 @@
 package com.coinwallet.coin_wallet_api.services;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.coinwallet.coin_wallet_api.exceptions.ResourceBadRequestException;
 import com.coinwallet.coin_wallet_api.models.Account;
 import com.coinwallet.coin_wallet_api.models.Transaction;
 import com.coinwallet.coin_wallet_api.repositories.TransactionRepository;
@@ -21,18 +24,18 @@ public class TransactionService {
     public Transaction makeTransfer(Long sourceAccountId, Long destinationAccountId, BigDecimal amount, String description){
 
         if (sourceAccountId.equals(destinationAccountId)) {
-            throw new RuntimeException("Error: You can't transfer yourself"); 
+            throw new ResourceBadRequestException("Error: You can't transfer yourself"); 
         }
         
         if(amount.compareTo(BigDecimal.ZERO) <= 0){
-            throw new RuntimeException("Error: Transfer amount must be greater than zero"); 
+            throw new ResourceBadRequestException("Error: Transfer amount must be greater than zero"); 
         }
 
         Account sAccount = accountService.findById(sourceAccountId);
         Account dAccount = accountService.findById(destinationAccountId); 
 
         if (sAccount.getBalance().compareTo(amount) < 0) {
-            throw new RuntimeException("Error: Insufficient funds in source account");
+            throw new ResourceBadRequestException("Error: Insufficient funds in source account, available: $" + sAccount.getBalance());
             }
 
         //Substract money to source account
@@ -52,6 +55,11 @@ public class TransactionService {
 
         return transactionRepository.save(transaction);
 
+    }
+
+    public List<Transaction> getTransactionHistory(Long accountId){
+        accountService.findById(accountId);
+        return transactionRepository.findBySourceAccountIdOrDestinationAccountId(accountId, accountId);
     }
 
 }

@@ -35,7 +35,7 @@ public class User {
 
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
-    @Column(name = "email", nullable = false, unique = true) // 'unique = true' crea el Unique Key en Postgres
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @NotBlank(message = "Password is required")

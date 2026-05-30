@@ -2,6 +2,7 @@ package com.coinwallet.coin_wallet_api.services;
 
 import org.springframework.stereotype.Service;
 
+import com.coinwallet.coin_wallet_api.exceptions.ResourceNotFoundException;
 import com.coinwallet.coin_wallet_api.models.Account;
 import com.coinwallet.coin_wallet_api.models.User;
 import com.coinwallet.coin_wallet_api.repositories.AccountRepository;
@@ -29,12 +30,12 @@ public class AccountService {
 
     public Account findById(Long id){
         return accountRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Error: account not found with ID: "+ id));
+                    .orElseThrow(() -> new ResourceNotFoundException("Error: account not found with ID: "+ id));
     }
 
     public Account getAccountByNumberAccount(String numberAccount){
         return accountRepository.findByAccountNumber(numberAccount)
-                    .orElseThrow(() -> new RuntimeException("Error: account not found with number: "+numberAccount));
+                    .orElseThrow(() -> new ResourceNotFoundException("Error: account not found with number: "+numberAccount));
     }
 
 
