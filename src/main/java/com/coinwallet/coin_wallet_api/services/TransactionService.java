@@ -1,8 +1,10 @@
 package com.coinwallet.coin_wallet_api.services;
 
 import java.math.BigDecimal;
-import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,9 +59,10 @@ public class TransactionService {
 
     }
 
-    public List<Transaction> getTransactionHistory(Long accountId){
+    public Page<Transaction> getTransactionHistory(Long accountId, int page, int size){
         accountService.findById(accountId);
-        return transactionRepository.findBySourceAccountIdOrDestinationAccountId(accountId, accountId);
+        PageRequest pageable = PageRequest.of(page, size, Sort.by("id").descending());
+        return transactionRepository.findBySourceAccountIdOrDestinationAccountId(accountId, accountId, pageable);
     }
 
 }

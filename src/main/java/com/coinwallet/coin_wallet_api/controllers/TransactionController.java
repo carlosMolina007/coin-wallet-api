@@ -9,8 +9,8 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,8 +38,9 @@ public class TransactionController {
 
     // GET - Transactions history (http://localhost:8080/api/account/{accountId}/history)}
     @GetMapping("/account/{accountId}/history")
-    public ResponseEntity<List<Transaction>> getTransactionHistory(@PathVariable Long accountId) {
-        List<Transaction> transactionHistory = transactionService.getTransactionHistory(accountId);
+    public ResponseEntity<Page<Transaction>> getTransactionHistory(@PathVariable Long accountId, @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size) {
+        Page<Transaction> transactionHistory = transactionService.getTransactionHistory(accountId, page, size);
 
         return ResponseEntity.ok(transactionHistory);
     }
