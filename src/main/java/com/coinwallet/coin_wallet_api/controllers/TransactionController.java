@@ -28,7 +28,7 @@ public class TransactionController {
         
         transactionService.makeTransfer(
             request.getSourceAccountId(),
-            request.getTargetAccountId(),
+            request.getTargetAccountNumber(),
             request.getAmount(),
             request.getDescription()
         );
@@ -52,8 +52,8 @@ public class TransactionController {
         @NotNull(message = "Source account ID is required")
         private Long sourceAccountId;
 
-        @NotNull(message = "Target account ID is required")
-        private Long targetAccountId;
+        @NotNull(message = "Target account number is required")
+        private String targetAccountNumber;
 
         @Positive(message = "Amount must be greater than zero")
         @NotNull(message = "Amount is required")

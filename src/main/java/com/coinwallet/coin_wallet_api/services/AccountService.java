@@ -38,6 +38,10 @@ public class AccountService {
                     .orElseThrow(() -> new ResourceNotFoundException("Error: account not found with number: "+numberAccount));
     }
 
+    public Account getMyAccount(String email){
+        return accountRepository.findByUser_Email(email)
+                    .orElseThrow(() -> new ResourceNotFoundException("Error: account not found for user: " + email));
+    }
 
 
 }

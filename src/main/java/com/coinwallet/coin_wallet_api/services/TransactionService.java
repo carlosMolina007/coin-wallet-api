@@ -23,7 +23,11 @@ public class TransactionService {
     private final AccountService accountService;
 
     @Transactional
-    public Transaction makeTransfer(Long sourceAccountId, Long destinationAccountId, BigDecimal amount, String description){
+    public Transaction makeTransfer(Long sourceAccountId, String destinationAccountNumber, BigDecimal amount, String description){
+
+        Account destinationAccount = accountService.getAccountByNumberAccount(destinationAccountNumber);
+
+        Long destinationAccountId = destinationAccount.getId();
 
         if (sourceAccountId.equals(destinationAccountId)) {
             throw new ResourceBadRequestException("Error: You can't transfer yourself"); 

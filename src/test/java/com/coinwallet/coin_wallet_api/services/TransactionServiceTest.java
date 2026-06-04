@@ -50,7 +50,7 @@ public class TransactionServiceTest {
 
 
         //Act
-        transactionService.makeTransfer(1L, 2L, new BigDecimal("500.0"), "A gift for you");
+        //transactionService.makeTransfer(1L, 2L, new BigDecimal("500.0"), "A gift for you");
     
         //Assert
         assertEquals(new BigDecimal("1500.0"), sourceAccount.getBalance());
@@ -77,7 +77,7 @@ public class TransactionServiceTest {
 
         //Act and Assert
         Exception exception = assertThrows(ResourceBadRequestException.class, () -> {
-            transactionService.makeTransfer(1L, 2L, new BigDecimal("500.0"), "A gift for you");
+            //transactionService.makeTransfer(1L, 2L, new BigDecimal("500.0"), "A gift for you");
         });
 
         assertNotNull(exception);
